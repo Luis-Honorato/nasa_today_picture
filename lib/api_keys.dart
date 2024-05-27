@@ -5,4 +5,6 @@
 /// Api Keys used in project.
 class ApiKeys {
   static const nasaApiKey = 'pejaih922qYbtoR4Sbh5yCS2lOtBqvXkcZow9tVV';
+  static const apiURl =
+      'https://api.nasa.gov/planetary/apod?API_KEY=$nasaApiKey';
 }
