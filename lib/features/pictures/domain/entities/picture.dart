@@ -6,7 +6,7 @@ class PictureEntity extends Equatable {
   final String date;
   final String title;
   final String description;
-  final String copyRight;
+  final String? copyRight;
 
   const PictureEntity({
     required this.url,
@@ -14,11 +14,11 @@ class PictureEntity extends Equatable {
     required this.date,
     required this.title,
     required this.description,
-    required this.copyRight,
+    this.copyRight,
   });
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       url,
       hdUrl,
