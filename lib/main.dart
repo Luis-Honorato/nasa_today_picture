@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nasa_today_picture/features/pictures/data/datasource/picture_datasource.dart';
+import 'package:nasa_today_picture/features/pictures/data/repository/decorators/picture_cache_repository_decorator.dart';
+import 'package:nasa_today_picture/features/pictures/data/repository/picture_repository.dart';
+import 'package:nasa_today_picture/features/pictures/domain/usecases/get_pictures_usecase.dart';
+import 'package:nasa_today_picture/features/pictures/presentation/bloc/picture_bloc.dart';
+import 'package:http/http.dart' as http;
+import 'package:nasa_today_picture/features/pictures/presentation/pages/pictures_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +24,18 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Scaffold(),
+      home: BlocProvider<PictureBloc>(
+        create: (context) => PictureBloc(
+          getPicturesUsecase: GetPicturesUsecase(
+            pictureRepository: PictureCacheRepositoryDecorator(
+              PictureRepository(
+                datasource: PictureDatasource(client: http.Client()),
+              ),
+            ),
+          ),
+        ),
+        child: const PicturesPage(),
+      ),
     );
   }
 }
