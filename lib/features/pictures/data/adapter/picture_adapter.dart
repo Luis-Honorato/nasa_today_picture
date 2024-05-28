@@ -22,4 +22,21 @@ class PictureAdapter {
     }
     return picturesList;
   }
+
+  static List<Map<String, dynamic>> toJson(List<PictureEntity> pictures) {
+    final List<Map<String, dynamic>> picturesJson = [];
+    for (PictureEntity picture in pictures) {
+      picturesJson.add({
+        'url': picture.url,
+        if (picture.hdUrl != null) 'hdurl': picture.hdUrl,
+        'date': picture.date,
+        'title': picture.title,
+        'explanation': picture.description,
+        if (picture.copyRight != null) 'copyright': picture.copyRight,
+        'media_type': 'image',
+      });
+    }
+
+    return picturesJson;
+  }
 }
