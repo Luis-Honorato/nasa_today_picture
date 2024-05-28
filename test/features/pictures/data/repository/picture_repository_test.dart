@@ -43,7 +43,8 @@ void main() {
       "explanation": "descriptionTest1",
       "hdurl": "hdUrlTest1",
       "title": "titleTest1",
-      "url": "urlTest1"
+      "url": "urlTest1",
+      "media_type": "image"
     },
     {
       "copyright": "copyRightTest2",
@@ -51,7 +52,8 @@ void main() {
       "explanation": "descriptionTest2",
       "hdurl": "hdUrlTest2",
       "title": "titleTest2",
-      "url": "urlTest2"
+      "url": "urlTest2",
+      "media_type": "image"
     }
   ]''';
 
