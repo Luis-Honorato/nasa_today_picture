@@ -6,10 +6,23 @@ enum Filtertype {
 }
 
 class PictureState extends Equatable {
+  /// Requisition Status of FetchPicturesEvent
   final RequestStatus pictureStatus;
+
+  /// All pictures Recieved from API
   final List<PictureEntity> pictures;
+
+  /// Pictures at are displayed for user. is nescessary to filter pictures by
+  /// Title or Date.
   final List<PictureEntity> filteredPictures;
+
+  /// User current picture filter.
+  ///
+  /// By default is date.
   final Filtertype selectedFilter;
+
+  /// Used to count user's requisitions, used to paginate all pictures,
+  /// and fetch more according user scrolling.
   final int requisitionsCount;
   const PictureState({
     this.pictureStatus = RequestStatus.initial,

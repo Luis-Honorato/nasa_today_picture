@@ -14,39 +14,46 @@ class PictureRepository implements IPictureRepository {
 
   @override
   Future<Either<Failure, List<PictureEntity>>> getPictures({
-    DateTime? startDate,
     DateTime? endDate,
     required int requisitionsCount,
   }) async {
     try {
-      /// Create a default value of StartDate when is null
       late String startDateString;
+
+      /// When endDate is not passed use Current day.
       final requisitionEndDate = endDate ?? DateTime.now();
-      if (startDate == null) {
-        final dateDifference =
-            requisitionEndDate.subtract(const Duration(days: 7));
-        startDateString =
-            '${dateDifference.year}-${dateDifference.month}-${dateDifference.day}';
-      } else {
-        startDateString =
-            '${startDate.year}-${startDate.month}-${startDate.day}';
-      }
+
+      /// Defines the start date based on 1 week before endDate.
+      final dateDifference =
+          requisitionEndDate.subtract(const Duration(days: 7));
+
+      /// Format startDate to format at expected format in API
+      startDateString =
+          '${dateDifference.year}-${dateDifference.month}-${dateDifference.day}';
+
+      /// Format endDate to format at expected format in API
       final endDateString =
           '${requisitionEndDate.year}-${requisitionEndDate.month}-${requisitionEndDate.day}';
 
+      /// Get response from datasource.
       final response = await datasource.getPictures(
         startDate: startDateString,
         endDate: endDateString,
       );
 
+      /// Encode body from string to List<Map<String,dynamic>>
       final body =
           (jsonDecode(response.body) as List).cast<Map<String, dynamic>>();
 
+      /// Format the body in type List<Map<String,dynamic>>
+      /// to a List of PictureEntity
       final pictures = PictureAdapter.fromJson(body);
 
+      /// Return success and picturesList;
       return Right(pictures);
-    } catch (_) {
-      return const Left(ServerFailure(''));
+    } catch (e) {
+      /// return error with error message
+      return Left(ServerFailure(e.toString()));
     }
   }
 }

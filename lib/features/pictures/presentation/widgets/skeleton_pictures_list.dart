@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nasa_today_picture/features/pictures/presentation/bloc/picture_bloc.dart';
 
+/// Skeleton used to indicate while pictues are loading.
 class SkeletonPicturesList extends StatelessWidget {
   const SkeletonPicturesList({super.key});
 

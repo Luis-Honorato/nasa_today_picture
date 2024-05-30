@@ -22,7 +22,6 @@ class PictureCacheRepositoryDecorator extends PictureRepositoryDecorator {
   }) async {
     try {
       final pictures = await super.getPictures(
-        startDate: startDate,
         endDate: endDate,
         requisitionsCount: requisitionsCount,
       );
@@ -32,6 +31,8 @@ class PictureCacheRepositoryDecorator extends PictureRepositoryDecorator {
       if (pictures.isLeft()) {
         throw Exception();
       }
+
+      /// when success, save recieved pictures in cache.
       _saveInCache(
         pictures.fold(
           (l) => [],
@@ -46,28 +47,44 @@ class PictureCacheRepositoryDecorator extends PictureRepositoryDecorator {
     }
   }
 
+  /// Save new pictures in cache
   _saveInCache(
     List<PictureEntity> pictures,
     int requisitionsCount,
   ) async {
     final prefs = await SharedPreferences.getInstance();
     final currentPictures = await _getInCache();
+
     final List<PictureEntity> allPictures = [];
+
+    /// Add new pictures in list
     allPictures.addAll(pictures);
+
+    /// when alredy exists pictures in cache, add in new cache list
     if (currentPictures.isNotEmpty && requisitionsCount > 0) {
       allPictures.addAll(currentPictures);
     }
+
+    /// Adaptate picturesList to String, to could save in cache.
     final jsonPictures = jsonEncode(PictureAdapter.toJson(allPictures));
 
+    /// Save in cache all loaded pictures
     prefs.setString(_picturesCacheKey, jsonPictures);
   }
 
+  /// Get saved pictures in cache
   Future<List<PictureEntity>> _getInCache() async {
     final prefs = await SharedPreferences.getInstance();
+
+    /// Get pictures saved in cache
     final picturesJsonString = prefs.getString(_picturesCacheKey);
+
+    /// Adaptate String into picturesJson.
+    /// When hasn't pictures in cache, returns an empty list.
     final picturesJson = (jsonDecode(picturesJsonString ?? '[]') as List)
         .cast<Map<String, dynamic>>();
 
+    /// Adaptate picturesJson into picturesList.
     final pictures = PictureAdapter.fromJson(picturesJson);
 
     return pictures;

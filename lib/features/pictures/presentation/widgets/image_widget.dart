@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+/// Used to display an Netwwork Image, and chache it in device.
 class ImageWidget extends StatelessWidget {
   final String url;
   const ImageWidget({

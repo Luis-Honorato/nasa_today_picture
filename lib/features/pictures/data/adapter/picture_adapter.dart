@@ -3,6 +3,7 @@ import 'package:nasa_today_picture/features/pictures/domain/entities/picture.dar
 class PictureAdapter {
   const PictureAdapter._();
 
+  /// Adaptate an json List recieved from API into a List of PictureEntity
   static List<PictureEntity> fromJson(List<Map<String, dynamic>> json) {
     final List<PictureEntity> picturesList = [];
     for (Map<String, dynamic> pictureJson in json) {
@@ -23,6 +24,7 @@ class PictureAdapter {
     return picturesList;
   }
 
+  /// Adaptate an List of PictureEntity into a json List to save in cache
   static List<Map<String, dynamic>> toJson(List<PictureEntity> pictures) {
     final List<Map<String, dynamic>> picturesJson = [];
     for (PictureEntity picture in pictures) {

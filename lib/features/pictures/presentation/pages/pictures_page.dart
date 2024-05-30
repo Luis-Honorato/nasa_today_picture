@@ -28,6 +28,9 @@ class _PicturesPageState extends State<PicturesPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<PictureBloc, PictureState>(
       bloc: pictureBloc,
+
+      /// Assert at Pictures page will be rebuilded only when requisition status
+      /// of FetchPictures change.
       buildWhen: (previous, current) =>
           previous.pictureStatus != current.pictureStatus,
       builder: (context, state) {

@@ -17,6 +17,9 @@ class PictureBloc extends Bloc<PictureEvent, PictureState> {
   }) : super(const PictureState()) {
     on<FetchPicturesEvent>(
       (event, emit) async {
+        /// when user scroll PicturesList, if hasn't internet don't must
+        /// Fetch new Pictures, why it will get in CachePictures, and will
+        /// duplicate pictures.
         if (state.requisitionsCount > 0) {
           if (!(await ConnectivityUtils.hasDeviceInternet)) {
             return;
@@ -27,12 +30,13 @@ class PictureBloc extends Bloc<PictureEvent, PictureState> {
           pictureStatus: RequestStatus.loading,
         ));
 
+        /// Every time user Fetch new pictures, get pictures from week in past.
         final endDate = DateTime.now().subtract(
           Duration(days: 7 * state.requisitionsCount),
         );
 
         final result = await getPicturesUsecase(
-          startDate: event.startDate,
+          /// When isin't the frist request, remove the current day from List.
           endDate: state.requisitionsCount == 0
               ? endDate
               : endDate.subtract(
@@ -57,6 +61,9 @@ class PictureBloc extends Bloc<PictureEvent, PictureState> {
           },
         );
       },
+
+      /// Assert at this event can be called one for each 100 miliseconds.
+      /// Used to avoid multiple requests while scrolling.
       transformer: throttleDroppable(const Duration(milliseconds: 100)),
     );
 
@@ -68,6 +75,8 @@ class PictureBloc extends Bloc<PictureEvent, PictureState> {
 
     on<FilterListEvent>((event, emit) {
       final label = event.label;
+
+      /// when hasn't label, should be displayed default list.
       if (label.isEmpty) {
         emit(state.copyWith(
           filteredPictures: [...state.pictures],
@@ -76,6 +85,7 @@ class PictureBloc extends Bloc<PictureEvent, PictureState> {
       }
       List<PictureEntity> filteredList = [];
 
+      /// Filter PicturesList according selected filter in state.
       filteredList = state.pictures
           .where(
             (picture) => state.selectedFilter == Filtertype.date

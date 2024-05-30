@@ -9,12 +9,13 @@ class GetPicturesUsecase {
   const GetPicturesUsecase({required this.pictureRepository});
 
   Future<Either<Failure, List<PictureEntity>>> call({
-    DateTime? startDate,
+    /// Defines the final range to get pictures.
     DateTime? endDate,
+
+    /// used to define the starDate range to get pictures.
     required requisitionsCount,
   }) async {
     return await pictureRepository.getPictures(
-      startDate: startDate,
       endDate: endDate,
       requisitionsCount: requisitionsCount,
     );

@@ -61,8 +61,12 @@ class _PicturesListState extends State<PicturesList> {
         ),
         Expanded(
           child: BlocBuilder<PictureBloc, PictureState>(
-            // buildWhen: (previous, current) =>
-            //     previous.filteredPictures != current.filteredPictures,
+            bloc: pictureBloc,
+
+            /// Assert at picturesList only will be rebuild when filteredPictures
+            /// change.
+            buildWhen: (previous, current) =>
+                previous.filteredPictures != current.filteredPictures,
             builder: (context, state) {
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -89,7 +93,8 @@ class _PicturesListState extends State<PicturesList> {
                               ),
                             ),
                             child: PictureCard(
-                                picture: state.filteredPictures[index]),
+                              picture: state.filteredPictures[index],
+                            ),
                           ),
                         ),
                       ),
