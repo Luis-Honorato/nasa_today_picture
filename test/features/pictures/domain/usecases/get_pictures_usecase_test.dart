@@ -38,10 +38,11 @@ void main() {
       ),
     ];
 
-    when(mockRepository.getPictures())
+    when(mockRepository.getPictures(
+            requisitionsCount: anyNamed('requisitionsCount')))
         .thenAnswer((realInvocation) async => const Right(picturesResponse));
 
-    final response = await getPicturesUsecase();
+    final response = await getPicturesUsecase(requisitionsCount: 1);
 
     expect(response, equals(const Right(picturesResponse)));
   });

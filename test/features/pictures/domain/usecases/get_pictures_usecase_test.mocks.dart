@@ -49,6 +49,7 @@ class MockIPictureRepository extends _i1.Mock
   _i4.Future<_i2.Either<_i5.Failure, List<_i6.PictureEntity>>> getPictures({
     DateTime? startDate,
     DateTime? endDate,
+    required int? requisitionsCount,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -57,6 +58,7 @@ class MockIPictureRepository extends _i1.Mock
           {
             #startDate: startDate,
             #endDate: endDate,
+            #requisitionsCount: requisitionsCount,
           },
         ),
         returnValue:
@@ -69,6 +71,7 @@ class MockIPictureRepository extends _i1.Mock
             {
               #startDate: startDate,
               #endDate: endDate,
+              #requisitionsCount: requisitionsCount,
             },
           ),
         )),

@@ -65,7 +65,7 @@ void main() {
       endDate: anyNamed('endDate'),
     )).thenAnswer((realInvocation) async => fakeResponse);
 
-    final responsePictures = await repository.getPictures();
+    final responsePictures = await repository.getPictures(requisitionsCount: 1);
     final pictures = responsePictures.fold((l) => null, (pictures) => pictures);
 
     expect(pictures![0], equals(picturesList[0]));
