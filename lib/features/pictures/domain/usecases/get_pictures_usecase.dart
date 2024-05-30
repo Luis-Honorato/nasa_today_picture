@@ -11,10 +11,12 @@ class GetPicturesUsecase {
   Future<Either<Failure, List<PictureEntity>>> call({
     DateTime? startDate,
     DateTime? endDate,
+    required requisitionsCount,
   }) async {
     return await pictureRepository.getPictures(
       startDate: startDate,
       endDate: endDate,
+      requisitionsCount: requisitionsCount,
     );
   }
 }

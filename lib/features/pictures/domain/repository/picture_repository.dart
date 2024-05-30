@@ -6,5 +6,6 @@ abstract class IPictureRepository {
   Future<Either<Failure, List<PictureEntity>>> getPictures({
     DateTime? startDate,
     DateTime? endDate,
+    required int requisitionsCount,
   });
 }

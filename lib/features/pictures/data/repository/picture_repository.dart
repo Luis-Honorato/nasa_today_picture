@@ -16,6 +16,7 @@ class PictureRepository implements IPictureRepository {
   Future<Either<Failure, List<PictureEntity>>> getPictures({
     DateTime? startDate,
     DateTime? endDate,
+    required int requisitionsCount,
   }) async {
     try {
       /// Create a default value of StartDate when is null

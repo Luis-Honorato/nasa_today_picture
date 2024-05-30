@@ -18,11 +18,13 @@ class PictureCacheRepositoryDecorator extends PictureRepositoryDecorator {
   Future<Either<Failure, List<PictureEntity>>> getPictures({
     DateTime? startDate,
     DateTime? endDate,
+    required int requisitionsCount,
   }) async {
     try {
       final pictures = await super.getPictures(
         startDate: startDate,
         endDate: endDate,
+        requisitionsCount: requisitionsCount,
       );
 
       /// When cannot get pictures, throws an exception to catch pictures
@@ -30,7 +32,13 @@ class PictureCacheRepositoryDecorator extends PictureRepositoryDecorator {
       if (pictures.isLeft()) {
         throw Exception();
       }
-      _saveInCache(pictures.fold((l) => [], (picturesList) => picturesList));
+      _saveInCache(
+        pictures.fold(
+          (l) => [],
+          (picturesList) => picturesList,
+        ),
+        requisitionsCount,
+      );
       return pictures;
     } catch (e) {
       final pictures = await _getInCache();
@@ -38,14 +46,17 @@ class PictureCacheRepositoryDecorator extends PictureRepositoryDecorator {
     }
   }
 
-  _saveInCache(List<PictureEntity> pictures) async {
+  _saveInCache(
+    List<PictureEntity> pictures,
+    int requisitionsCount,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
     final currentPictures = await _getInCache();
     final List<PictureEntity> allPictures = [];
-    if (currentPictures.isNotEmpty) {
+    allPictures.addAll(pictures);
+    if (currentPictures.isNotEmpty && requisitionsCount > 0) {
       allPictures.addAll(currentPictures);
     }
-    allPictures.addAll(pictures);
     final jsonPictures = jsonEncode(PictureAdapter.toJson(allPictures));
 
     prefs.setString(_picturesCacheKey, jsonPictures);

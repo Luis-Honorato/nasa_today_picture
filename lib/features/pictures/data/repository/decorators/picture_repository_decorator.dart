@@ -13,10 +13,12 @@ class PictureRepositoryDecorator implements IPictureRepository {
   Future<Either<Failure, List<PictureEntity>>> getPictures({
     DateTime? startDate,
     DateTime? endDate,
+    required int requisitionsCount,
   }) async {
     return await pictureRepository.getPictures(
       startDate: startDate,
       endDate: endDate,
+      requisitionsCount: requisitionsCount,
     );
   }
 }

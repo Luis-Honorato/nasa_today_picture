@@ -38,6 +38,7 @@ class PictureBloc extends Bloc<PictureEvent, PictureState> {
               : endDate.subtract(
                   Duration(days: state.requisitionsCount),
                 ),
+          requisitionsCount: state.requisitionsCount,
         );
 
         result.fold(
