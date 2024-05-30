@@ -12,7 +12,11 @@ class PictureRepositoryDecorator implements IPictureRepository {
   @override
   Future<Either<Failure, List<PictureEntity>>> getPictures({
     DateTime? startDate,
+    DateTime? endDate,
   }) async {
-    return await pictureRepository.getPictures(startDate: startDate);
+    return await pictureRepository.getPictures(
+      startDate: startDate,
+      endDate: endDate,
+    );
   }
 }

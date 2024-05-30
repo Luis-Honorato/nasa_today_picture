@@ -46,13 +46,18 @@ class MockIPictureRepository extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.PictureEntity>>> getPictures(
-          {DateTime? startDate}) =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.PictureEntity>>> getPictures({
+    DateTime? startDate,
+    DateTime? endDate,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #getPictures,
           [],
-          {#startDate: startDate},
+          {
+            #startDate: startDate,
+            #endDate: endDate,
+          },
         ),
         returnValue:
             _i4.Future<_i2.Either<_i5.Failure, List<_i6.PictureEntity>>>.value(
@@ -61,7 +66,10 @@ class MockIPictureRepository extends _i1.Mock
           Invocation.method(
             #getPictures,
             [],
-            {#startDate: startDate},
+            {
+              #startDate: startDate,
+              #endDate: endDate,
+            },
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.PictureEntity>>>);

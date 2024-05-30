@@ -17,9 +17,13 @@ class PictureCacheRepositoryDecorator extends PictureRepositoryDecorator {
   @override
   Future<Either<Failure, List<PictureEntity>>> getPictures({
     DateTime? startDate,
+    DateTime? endDate,
   }) async {
     try {
-      final pictures = await super.getPictures(startDate: startDate);
+      final pictures = await super.getPictures(
+        startDate: startDate,
+        endDate: endDate,
+      );
 
       /// When cannot get pictures, throws an exception to catch pictures
       /// from local cache
@@ -36,15 +40,22 @@ class PictureCacheRepositoryDecorator extends PictureRepositoryDecorator {
 
   _saveInCache(List<PictureEntity> pictures) async {
     final prefs = await SharedPreferences.getInstance();
-    final jsonPictures = jsonEncode(PictureAdapter.toJson(pictures));
+    final currentPictures = await _getInCache();
+    final List<PictureEntity> allPictures = [];
+    if (currentPictures.isNotEmpty) {
+      allPictures.addAll(currentPictures);
+    }
+    allPictures.addAll(pictures);
+    final jsonPictures = jsonEncode(PictureAdapter.toJson(allPictures));
+
     prefs.setString(_picturesCacheKey, jsonPictures);
   }
 
   Future<List<PictureEntity>> _getInCache() async {
     final prefs = await SharedPreferences.getInstance();
     final picturesJsonString = prefs.getString(_picturesCacheKey);
-    final picturesJson =
-        (jsonDecode(picturesJsonString!) as List).cast<Map<String, dynamic>>();
+    final picturesJson = (jsonDecode(picturesJsonString ?? '[]') as List)
+        .cast<Map<String, dynamic>>();
 
     final pictures = PictureAdapter.fromJson(picturesJson);
 

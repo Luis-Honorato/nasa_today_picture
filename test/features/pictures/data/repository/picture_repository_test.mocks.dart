@@ -61,19 +61,28 @@ class MockPictureDatasource extends _i1.Mock implements _i3.PictureDatasource {
       ) as _i2.Client);
 
   @override
-  _i4.Future<_i2.Response> getPictures({required String? startDate}) =>
+  _i4.Future<_i2.Response> getPictures({
+    required String? startDate,
+    required String? endDate,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #getPictures,
           [],
-          {#startDate: startDate},
+          {
+            #startDate: startDate,
+            #endDate: endDate,
+          },
         ),
         returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #getPictures,
             [],
-            {#startDate: startDate},
+            {
+              #startDate: startDate,
+              #endDate: endDate,
+            },
           ),
         )),
       ) as _i4.Future<_i2.Response>);

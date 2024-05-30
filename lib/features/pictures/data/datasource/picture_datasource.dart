@@ -6,10 +6,13 @@ class PictureDatasource {
 
   PictureDatasource({required this.client});
 
-  Future<http.Response> getPictures({required String startDate}) async {
+  Future<http.Response> getPictures({
+    required String startDate,
+    required String endDate,
+  }) async {
     /// Request response from api
-    final response =
-        await client.get(Uri.parse('${ApiKeys.apiURl}&start_date=$startDate'));
+    final response = await client.get(
+        Uri.parse('${ApiKeys.apiURl}&start_date=$startDate&end_date=$endDate'));
 
     return response;
   }

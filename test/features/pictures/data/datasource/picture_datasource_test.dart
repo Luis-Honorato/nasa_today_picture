@@ -46,7 +46,10 @@ void main() {
     when(mockClient.get(any))
         .thenAnswer((realInvocation) async => fakeResponse);
 
-    final response = await datasource.getPictures(startDate: '');
+    final response = await datasource.getPictures(
+      startDate: '',
+      endDate: '',
+    );
 
     expect(response, equals(fakeResponse));
   });

@@ -10,11 +10,13 @@ class PictureState extends Equatable {
   final List<PictureEntity> pictures;
   final List<PictureEntity> filteredPictures;
   final Filtertype selectedFilter;
+  final int requisitionsCount;
   const PictureState({
     this.pictureStatus = RequestStatus.initial,
     this.pictures = const [],
     this.filteredPictures = const [],
     this.selectedFilter = Filtertype.date,
+    this.requisitionsCount = 0,
   });
 
   PictureState copyWith({
@@ -22,12 +24,14 @@ class PictureState extends Equatable {
     List<PictureEntity>? pictures,
     List<PictureEntity>? filteredPictures,
     Filtertype? selectedFilter,
+    int? requisitionsCount,
   }) {
     return PictureState(
       pictureStatus: pictureStatus ?? this.pictureStatus,
       pictures: pictures ?? this.pictures,
       filteredPictures: filteredPictures ?? this.filteredPictures,
       selectedFilter: selectedFilter ?? this.selectedFilter,
+      requisitionsCount: requisitionsCount ?? this.requisitionsCount,
     );
   }
 
@@ -37,5 +41,6 @@ class PictureState extends Equatable {
         pictures,
         filteredPictures,
         selectedFilter,
+        requisitionsCount,
       ];
 }

@@ -33,19 +33,31 @@ class _PicturesPageState extends State<PicturesPage> {
       builder: (context, state) {
         if (state.pictureStatus == RequestStatus.failure) {
           return FailureWidget(
-            errorMessage:
-                'Was not possible loading pictures, click to try again',
+            errorMessage: 'Was not possible load pictures, click to try again',
             retryFunction: () => pictureBloc.add(const FetchPicturesEvent()),
           );
         }
 
-        if (state.pictureStatus == RequestStatus.success) {
+        if (state.pictureStatus == RequestStatus.loading ||
+            state.pictureStatus == RequestStatus.initial) {
+          if (state.pictures.isNotEmpty) {
+            return const SafeArea(
+              child: PicturesList(),
+            );
+          }
           return const SafeArea(
-            child: PicturesList(),
+            child: SkeletonPicturesList(),
+          );
+        }
+        if (state.pictures.isEmpty) {
+          return FailureWidget(
+            errorMessage:
+                'Hello There was not possible to load pictures, click to try again',
+            retryFunction: () => pictureBloc.add(const FetchPicturesEvent()),
           );
         }
         return const SafeArea(
-          child: SkeletonPicturesList(),
+          child: PicturesList(),
         );
       },
     );

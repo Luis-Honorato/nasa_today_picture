@@ -15,7 +15,13 @@ class FailureWidget extends StatelessWidget {
       body: GestureDetector(
         onTap: () => retryFunction.call(),
         child: Center(
-          child: Text(errorMessage),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              errorMessage,
+              textAlign: TextAlign.center,
+            ),
+          ),
         ),
       ),
     );

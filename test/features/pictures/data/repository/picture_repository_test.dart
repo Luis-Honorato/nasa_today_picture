@@ -60,8 +60,10 @@ void main() {
   final fakeResponse = http.Response(fakePicturesJson, 200);
 
   test('Must return a list of quizes when call getPictures method', () async {
-    when(mockDatasource.getPictures(startDate: anyNamed('startDate')))
-        .thenAnswer((realInvocation) async => fakeResponse);
+    when(mockDatasource.getPictures(
+      startDate: anyNamed('startDate'),
+      endDate: anyNamed('endDate'),
+    )).thenAnswer((realInvocation) async => fakeResponse);
 
     final responsePictures = await repository.getPictures();
     final pictures = responsePictures.fold((l) => null, (pictures) => pictures);

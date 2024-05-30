@@ -8,8 +8,13 @@ class GetPicturesUsecase {
 
   const GetPicturesUsecase({required this.pictureRepository});
 
-  Future<Either<Failure, List<PictureEntity>>> call(
-      {DateTime? startDate}) async {
-    return await pictureRepository.getPictures(startDate: startDate);
+  Future<Either<Failure, List<PictureEntity>>> call({
+    DateTime? startDate,
+    DateTime? endDate,
+  }) async {
+    return await pictureRepository.getPictures(
+      startDate: startDate,
+      endDate: endDate,
+    );
   }
 }

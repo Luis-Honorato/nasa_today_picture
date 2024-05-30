@@ -3,6 +3,8 @@ import 'package:nasa_today_picture/features/pictures/domain/entities/picture.dar
 import 'package:nasa_today_picture/utils/failures.dart';
 
 abstract class IPictureRepository {
-  Future<Either<Failure, List<PictureEntity>>> getPictures(
-      {DateTime? startDate});
+  Future<Either<Failure, List<PictureEntity>>> getPictures({
+    DateTime? startDate,
+    DateTime? endDate,
+  });
 }

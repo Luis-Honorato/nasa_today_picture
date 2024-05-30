@@ -15,19 +15,28 @@ class PictureRepository implements IPictureRepository {
   @override
   Future<Either<Failure, List<PictureEntity>>> getPictures({
     DateTime? startDate,
+    DateTime? endDate,
   }) async {
     try {
       /// Create a default value of StartDate when is null
       late String startDateString;
+      final requisitionEndDate = endDate ?? DateTime.now();
       if (startDate == null) {
-        final dateDifference = DateTime.now().subtract(const Duration(days: 7));
+        final dateDifference =
+            requisitionEndDate.subtract(const Duration(days: 7));
         startDateString =
             '${dateDifference.year}-${dateDifference.month}-${dateDifference.day}';
       } else {
         startDateString =
             '${startDate.year}-${startDate.month}-${startDate.day}';
       }
-      final response = await datasource.getPictures(startDate: startDateString);
+      final endDateString =
+          '${requisitionEndDate.year}-${requisitionEndDate.month}-${requisitionEndDate.day}';
+
+      final response = await datasource.getPictures(
+        startDate: startDateString,
+        endDate: endDateString,
+      );
 
       final body =
           (jsonDecode(response.body) as List).cast<Map<String, dynamic>>();
