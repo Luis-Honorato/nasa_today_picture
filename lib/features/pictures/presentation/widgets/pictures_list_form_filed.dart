@@ -52,11 +52,11 @@ class _PicturesListFormFieldState extends State<PicturesListFormField> {
                     },
                     dropdownMenuEntries: const [
                       DropdownMenuEntry(
-                        label: 'date',
+                        label: 'Date',
                         value: Filtertype.date,
                       ),
                       DropdownMenuEntry(
-                        label: 'title',
+                        label: 'Title',
                         value: Filtertype.title,
                       )
                     ],

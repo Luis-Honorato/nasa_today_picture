@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nasa_today_picture/features/pictures/presentation/bloc/picture_bloc.dart';
 
 class SkeletonPicturesList extends StatelessWidget {
   const SkeletonPicturesList({super.key});
@@ -14,8 +15,30 @@ class SkeletonPicturesList extends StatelessWidget {
           ),
           child: TextFormField(
             enabled: false,
-            decoration: const InputDecoration(
-              suffixIcon: Icon(Icons.search),
+            decoration: InputDecoration(
+              suffixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.search),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: DropdownMenu(
+                      enabled: false,
+                      inputDecorationTheme: const InputDecorationTheme(
+                        border: InputBorder.none,
+                      ),
+                      initialSelection: Filtertype.date,
+                      width: MediaQuery.sizeOf(context).width / 4,
+                      dropdownMenuEntries: const [
+                        DropdownMenuEntry(
+                          label: 'Date',
+                          value: Filtertype.date,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

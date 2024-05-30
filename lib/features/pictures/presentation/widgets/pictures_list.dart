@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nasa_today_picture/features/pictures/presentation/bloc/picture_bloc.dart';
+import 'package:nasa_today_picture/features/pictures/presentation/pages/picture_details_page.dart';
 import 'package:nasa_today_picture/features/pictures/presentation/widgets/picture_card.dart';
 import 'package:nasa_today_picture/features/pictures/presentation/widgets/pictures_list_form_filed.dart';
 
@@ -37,7 +38,17 @@ class PicturesList extends StatelessWidget {
                       horizontal: 12.0,
                       vertical: 8,
                     ),
-                    child: PictureCard(picture: state.filteredPictures[index]),
+                    child: GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => PictureDetailsPage(
+                            picture: state.filteredPictures[index],
+                          ),
+                        ),
+                      ),
+                      child:
+                          PictureCard(picture: state.filteredPictures[index]),
+                    ),
                   );
                 },
               );

@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nasa_today_picture/features/pictures/domain/entities/picture.dart';
+import 'package:nasa_today_picture/features/pictures/presentation/widgets/image_widget.dart';
 
 class PictureCard extends StatelessWidget {
   final PictureEntity picture;
@@ -16,20 +16,7 @@ class PictureCard extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image(
-            fit: BoxFit.cover,
-            image: CachedNetworkImageProvider(
-              picture.url,
-            ),
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
+          ImageWidget(url: picture.url),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
