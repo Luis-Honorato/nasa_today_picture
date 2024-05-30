@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class PictureEntity extends Equatable {
   final String url;
-  final String hdUrl;
+  final String? hdUrl;
   final String date;
   final String title;
   final String description;
@@ -10,7 +10,7 @@ class PictureEntity extends Equatable {
 
   const PictureEntity({
     required this.url,
-    required this.hdUrl,
+    this.hdUrl,
     required this.date,
     required this.title,
     required this.description,

@@ -31,10 +31,39 @@ class PictureBloc extends Bloc<PictureEvent, PictureState> {
         (pictures) {
           emit(state.copyWith(
             pictureStatus: RequestStatus.success,
-            pictures: pictures,
+            pictures: [...state.pictures, ...pictures],
+            filteredPictures: [...state.filteredPictures, ...pictures],
           ));
         },
       );
+    });
+
+    on<ChangeFilterEvent>(
+      (event, emit) => emit(state.copyWith(
+        selectedFilter: event.selectedFilter,
+      )),
+    );
+
+    on<FilterListEvent>((event, emit) {
+      final label = event.label;
+      if (label.isEmpty) {
+        emit(state.copyWith(
+          filteredPictures: [...state.pictures],
+        ));
+        return;
+      }
+      List<PictureEntity> filteredList = [];
+
+      filteredList = state.pictures
+          .where(
+            (picture) => state.selectedFilter == Filtertype.date
+                ? picture.date.toLowerCase().contains(label.toLowerCase())
+                : picture.title.toLowerCase().contains(label.toLowerCase()),
+          )
+          .toList();
+      emit(state.copyWith(
+        filteredPictures: [...filteredList],
+      ));
     });
   }
 }

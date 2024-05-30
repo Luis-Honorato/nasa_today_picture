@@ -20,9 +20,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Nasa Today Picture',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      theme: ThemeData.dark(
         useMaterial3: true,
+      ).copyWith(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 44, 44, 44),
       ),
       home: BlocProvider<PictureBloc>(
         create: (context) => PictureBloc(
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        child: const PicturesPage(),
+        child: const Scaffold(body: PicturesPage()),
       ),
     );
   }
