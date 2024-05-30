@@ -16,6 +16,7 @@ class PicturesList extends StatefulWidget {
 
 class _PicturesListState extends State<PicturesList> {
   late final PictureBloc pictureBloc;
+  final TextEditingController filterController = TextEditingController();
   final _scrollController = ScrollController();
 
   bool get _isBottom {
@@ -43,7 +44,7 @@ class _PicturesListState extends State<PicturesList> {
 
   /// When ever scroll position isBottom should make a Request for load new list
   void _onScroll() {
-    if (_isBottom) {
+    if (_isBottom && filterController.text.isEmpty) {
       pictureBloc.add(const FetchPicturesEvent());
     }
   }
@@ -52,12 +53,14 @@ class _PicturesListState extends State<PicturesList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(
+        Padding(
+          padding: const EdgeInsets.symmetric(
             horizontal: 18.0,
             vertical: 12,
           ),
-          child: PicturesListFormField(),
+          child: PicturesListFormField(
+            filterController: filterController,
+          ),
         ),
         Expanded(
           child: BlocBuilder<PictureBloc, PictureState>(

@@ -3,7 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nasa_today_picture/features/pictures/presentation/bloc/picture_bloc.dart';
 
 class PicturesListFormField extends StatefulWidget {
-  const PicturesListFormField({super.key});
+  final TextEditingController filterController;
+  const PicturesListFormField({
+    super.key,
+    required this.filterController,
+  });
 
   @override
   State<PicturesListFormField> createState() => _PicturesListFormFieldState();
@@ -11,7 +15,7 @@ class PicturesListFormField extends StatefulWidget {
 
 class _PicturesListFormFieldState extends State<PicturesListFormField> {
   late PictureBloc pictureBloc;
-  final TextEditingController filterController = TextEditingController();
+
   final FocusNode filterFocusNode = FocusNode();
   @override
   void initState() {
@@ -25,7 +29,7 @@ class _PicturesListFormFieldState extends State<PicturesListFormField> {
       bloc: pictureBloc,
       builder: (context, state) {
         return TextFormField(
-          controller: filterController,
+          controller: widget.filterController,
           focusNode: filterFocusNode,
           onChanged: (label) => pictureBloc.add(FilterListEvent(label: label)),
           keyboardType: state.selectedFilter == Filtertype.date
